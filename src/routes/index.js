@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import auth from '@react-native-firebase/auth';
 
 import { SignIn } from '../pages/SignIn';
-import { Home } from '../pages/Home';
+
+import { AppRoutes } from './app.routes';
 
 export function Routes() {
   const [initializing, setInitializing] = useState(true);
@@ -21,6 +22,6 @@ export function Routes() {
   if (initializing) return null; 
 
   return (
-    !user ? <SignIn /> : <Home />
+    !user ? <SignIn /> : <AppRoutes />
   );
 }
