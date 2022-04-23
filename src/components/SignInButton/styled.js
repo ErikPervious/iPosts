@@ -5,7 +5,7 @@ export const ButtonSendForm = styled.TouchableOpacity`
   padding: 12px 25px;
   border-radius: 12px;
   margin-top: 20px;
-  background-color: ${colors.BLUE_PRIMARY};
+  background-color: ${colors.BLUE_SECONDARY};
 `;
 export const ButtonSendFormText = styled.Text`
   color: ${colors.WHITE_PRIMARY};

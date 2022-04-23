@@ -13,6 +13,10 @@ export const ContainerLogo = styled.View`
   align-items: center;
   justify-content: center;
 `;
+export const ImageLogo = styled.Image`
+  width: 150px;
+  height: 150px;
+`;
 export const ContainerEmpty = styled.View``;
 export const ContainerForm = styled.View`
   flex: 1;

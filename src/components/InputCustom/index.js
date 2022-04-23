@@ -1,24 +1,44 @@
-import React, { useRef } from "react";  
+import React, { useRef, useState } from "react";  
+import {
+  Eye as EyeIcon,
+  EyeOff as EyeOffIcon
+} from 'react-native-feather';
 
 import { 
+  ButtonPasswordVisible,
   Container, 
-  Input, 
-  Line 
+  Input
 } from "./styled";
 import { colors } from "../../styles";
 
-export function InputCustom({fullName, setFullName, placeholder}) {
+export function InputCustom(props) {
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const {
+    value, 
+    onChange, 
+    placeholder,
+    isPassword
+  } = props;
 
   return (
     <Container>
       <Input
-        value={fullName}
-        onChangeText={text => setFullName(text)}
+        value={value}
+        onChangeText={text => onChange(text)}
         placeholder={placeholder}
         placeholderTextColor={colors.WHITE_SECONDARY+50}
         underlineColorAndroid="transparent"
+        secureTextEntry={passwordVisible}
       />
-      <Line />
+      {isPassword &&
+        <ButtonPasswordVisible onPress={()=>setPasswordVisible(!passwordVisible)}>
+          { !passwordVisible
+            ? <EyeOffIcon color={colors.WHITE_SECONDARY} />
+            : <EyeIcon color={colors.WHITE_SECONDARY} />
+          }
+        </ButtonPasswordVisible>
+      }
     </Container>
   )
 }

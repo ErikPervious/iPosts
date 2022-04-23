@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { ActivityIndicator, Keyboard, StatusBar, TouchableWithoutFeedback } from 'react-native';
-import { Send as SendIcon } from 'react-native-feather';
 
 import { FirebaseContext } from '../../contexts/useFirebase';
 
@@ -11,7 +10,8 @@ import {
   Container, 
   ContainerEmpty, 
   ContainerForm, 
-  ContainerLogo
+  ContainerLogo,
+  ImageLogo
 } from './styled';
 import { colors } from '../../styles';
 
@@ -32,11 +32,9 @@ export function SignIn() {
       <Container>
         <StatusBar backgroundColor={colors.BLACK_TERTIARY} />
         <ContainerLogo>
-          <SendIcon
-            width={140}
-            height={140}
-            color={colors.BLUE_PRIMARY}
-            strokeWidth={1}
+          <ImageLogo
+            source={require('../../assets/images/send.png')}
+            resizeMode="contain"
           />
         </ContainerLogo>
         { connectionState ? (
@@ -47,20 +45,21 @@ export function SignIn() {
           <ContainerForm>
             { !signInMethod && 
               <InputCustom 
-                fullName={fullName} 
-                setFullName={setFullName}
+                value={fullName} 
+                onChange={setFullName}
                 placeholder="Nome Completo"
               />
             }
             <InputCustom 
-              fullName={email} 
-              setFullName={setEmail}
+              value={email} 
+              onChange={setEmail}
               placeholder="Email"
             />
             <InputCustom 
-              fullName={password} 
-              setFullName={setPassword}
+              value={password} 
+              onChange={setPassword}
               placeholder="Senha"
+              isPassword={true}
             />
             <SignInButton
               signInMethod={signInMethod}
