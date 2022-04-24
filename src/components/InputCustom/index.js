@@ -12,7 +12,7 @@ import {
 import { colors } from "../../styles";
 
 export function InputCustom(props) {
-  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(true);
 
   const {
     value, 
@@ -29,9 +29,9 @@ export function InputCustom(props) {
         placeholder={placeholder}
         placeholderTextColor={colors.WHITE_SECONDARY+50}
         underlineColorAndroid="transparent"
-        secureTextEntry={passwordVisible}
+        secureTextEntry={isPassword && passwordVisible}
       />
-      {isPassword &&
+      {isPassword && value.length != 0 &&
         <ButtonPasswordVisible onPress={()=>setPasswordVisible(!passwordVisible)}>
           { !passwordVisible
             ? <EyeOffIcon color={colors.WHITE_SECONDARY} />

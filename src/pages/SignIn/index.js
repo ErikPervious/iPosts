@@ -7,8 +7,7 @@ import { InputCustom } from '../../components/InputCustom';
 import { SignInButton } from '../../components/SignInButton';
 
 import {
-  Container, 
-  ContainerEmpty, 
+  Container,
   ContainerForm, 
   ContainerLogo,
   ImageLogo
@@ -37,41 +36,37 @@ export function SignIn() {
             resizeMode="contain"
           />
         </ContainerLogo>
-        { connectionState ? (
-          <ContainerEmpty>
-            <ActivityIndicator size={50} color={colors.BLUE_PRIMARY} />
-          </ContainerEmpty>
-        ) : (
-          <ContainerForm>
-            { !signInMethod && 
-              <InputCustom 
-                value={fullName} 
-                onChange={setFullName}
-                placeholder="Nome Completo"
-              />
-            }
+        <ContainerForm>
+          { !signInMethod && 
             <InputCustom 
-              value={email} 
-              onChange={setEmail}
-              placeholder="Email"
+              value={fullName} 
+              onChange={setFullName}
+              placeholder="Nome Completo"
             />
-            <InputCustom 
-              value={password} 
-              onChange={setPassword}
-              placeholder="Senha"
-              isPassword={true}
-            />
-            <SignInButton
-              signInMethod={signInMethod}
-              onPress={() => {
-                !signInMethod 
-                ? LogOnInFirebase(fullName, email, password)
-                : LogInInFirebase(email, password)
-              }}
-              setSignInMethod={setSignInMethod}
-            />
-          </ContainerForm>
-        )}
+          }
+          <InputCustom 
+            value={email} 
+            onChange={setEmail}
+            placeholder="Email"
+          />
+          <InputCustom 
+            value={password} 
+            onChange={setPassword}
+            placeholder="Senha"
+            isPassword={true}
+          />
+          <SignInButton
+            signInMethod={signInMethod}
+            onPress={() => {
+              !signInMethod 
+              ? LogOnInFirebase(fullName, email, password)
+              : LogInInFirebase(email, password)
+            }}
+            setSignInMethod={setSignInMethod}
+            isLoading={connectionState}
+            setChange={{setFullName, setEmail, setPassword}}
+          />
+        </ContainerForm>
       </Container>
     </TouchableWithoutFeedback>
   );

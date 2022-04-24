@@ -1,4 +1,6 @@
 import React from "react";
+import { ActivityIndicator } from "react-native";
+import { colors } from "../../styles";
 import { 
   ButtonChangeMethod,
   ButtonChangeMethodText,
@@ -6,15 +8,28 @@ import {
   ButtonSendFormText
 } from "./styled";
 
-export function SignInButton({signInMethod, setSignInMethod, onPress }) {
+export function SignInButton({signInMethod, setSignInMethod, onPress, connectionState, setChange}) {
+
+  const {setFullName, setEmail, setPassword} = setChange;
+
   return (
     <>
-      <ButtonSendForm onPress={onPress}>
-        <ButtonSendFormText>
-          { !signInMethod ? 'ABRIR CONTA' : 'ENTRAR'  }
-        </ButtonSendFormText>
+      <ButtonSendForm disabled={connectionState} onPress={onPress}>
+        {connectionState
+          ? <ActivityIndicator size={30} color={colors.WHITE_SECONDARY} />
+          : <ButtonSendFormText>
+            { !signInMethod ? 'ABRIR CONTA' : 'ENTRAR'  }
+          </ButtonSendFormText>
+        }
       </ButtonSendForm>
-      <ButtonChangeMethod onPress={() => setSignInMethod(!signInMethod)}>
+      <ButtonChangeMethod 
+        onPress={() => {
+          setFullName('');
+          setEmail('');
+          setPassword('');
+          setSignInMethod(!signInMethod);
+        }}
+      >
         <ButtonChangeMethodText>
           { !signInMethod 
             ? 'Já tenho conta, fazer login.' 

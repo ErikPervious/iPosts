@@ -3,5 +3,6 @@ import { colors } from '../../styles';
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${colors.BLACK_SECONDARY};
+  align-items: center;
+  background-color: #00ff0050;
 `;
