@@ -6,6 +6,8 @@ import {
 } from 'react-native-feather';
 import { useNavigation } from '@react-navigation/native';
 
+import { configIcon } from "../../utils/configIcon";
+
 import { 
   ButtonIconNavigator, 
   Container 
@@ -17,10 +19,6 @@ export function TabBarCustom() {
   
   function navigateToPage(routeName) {
     navigation.navigate(routeName);
-    // navigation.reset({
-    //   index: 0,
-    //   routes: [{ name: routeName }],
-    // });
   };
 
   return (
@@ -29,27 +27,21 @@ export function TabBarCustom() {
         onPress={() => navigateToPage('Home')}
       >
         <HomeIcon
-          color={colors.WHITE_PRIMARY}
-          width={30}
-          height={30}
+          {...configIcon}
         />
       </ButtonIconNavigator>
       <ButtonIconNavigator
         onPress={() => navigateToPage('NewPost')}
       >
         <PlusSquareIcon
-          color={colors.WHITE_PRIMARY}
-          width={30}
-          height={30}
+          {...configIcon}
         />
       </ButtonIconNavigator>
       <ButtonIconNavigator
         onPress={() => navigateToPage('Profile')}
       >
         <UserIcon
-          color={colors.WHITE_PRIMARY}
-          width={30}
-          height={30}
+          {...configIcon}
         />
       </ButtonIconNavigator>
     </Container>

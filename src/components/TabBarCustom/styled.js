@@ -10,7 +10,7 @@ export const Container = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
-  padding: 10px 0;
+  padding: 15px 0;
 `;
 export const ButtonIconNavigator = styled.TouchableOpacity`
   width: 25%;
