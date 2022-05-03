@@ -5,7 +5,6 @@ export const Container = styled.View`
   width: 100%;
   height: 60px;
   background-color: ${colors.BLACK_SECONDARY};
-  margin-bottom: 30px;
   flex-direction: row;
   padding: 0 20px;
   align-items: center;
