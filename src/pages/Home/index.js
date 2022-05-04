@@ -1,39 +1,29 @@
 import React, { useContext, useEffect } from 'react';
-import { Button, ScrollView, StatusBar, Text } from 'react-native';
+import { ActivityIndicator, ScrollView, StatusBar } from 'react-native';
 import { Search as SearchIcon } from 'react-native-feather';
-
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 
 import { FirebaseContext } from '../../contexts/useFirebase';
 
 import { TabBarCustom } from '../../components/TabBarCustom';
 import { HeaderCustom } from '../../components/HeaderCustom';
+import { Post } from '../../components/Post';
 
 import { configIcon } from '../../utils/configIcon';
 
-import { Container } from './styled';
+import { Container, ContainerLoading, SafeArea } from './styled';
 import { colors } from '../../styles';
-import { Post } from '../../components/Post';
 
 export function Home() {
 
-  const { 
-    LogOutOfFirebase, 
-    setUser, 
-    user 
+  const {
+    posts,
+    loadingPosts,
+    getPosts,
+    getUserData
   } = useContext(FirebaseContext);
 
-  useEffect(() => {
-    function getUserData() {
-      const uid = auth().currentUser.uid;
-      firestore().collection('Users').doc(uid).get()
-      .then(snapshot => {
-        setUser(snapshot.data());
-      });
-    };
-    getUserData();
-  }, []);
+  useEffect(() => getUserData(), []);
+  useEffect(() => getPosts(), []);
 
   return (
     <Container>
@@ -43,9 +33,31 @@ export function Home() {
         iconRight={<SearchIcon {...configIcon} />}
         iconRightAction={() => {}}
       />
-        <Post />
-      {/* <Text style={{marginLeft: 10, color: 'white'}}>Olá, {user.name}</Text>
-      <Button title="sair" onPress={LogOutOfFirebase} /> */}
+      { loadingPosts ? (
+        <ContainerLoading>
+          <ActivityIndicator size={50} color={colors.BLUE_PRIMARY} />
+        </ContainerLoading>
+      ) : (
+        <ScrollView 
+          style={{width: '100%'}}
+          showsVerticalScrollIndicator={false}
+          endFillColor='#00ff00'
+        >
+          <SafeArea>
+            {posts.map((value, index) => (
+              <Post
+                author={value.author}
+                name={value.name}
+                content={value.content}
+                createdIn={`${value.createdIn}`}
+                likes={value.likes}
+                key={value.postId}
+                position={index}
+              />
+            ))}
+          </SafeArea>
+        </ScrollView>
+      )}
       <TabBarCustom />
     </Container>
   );

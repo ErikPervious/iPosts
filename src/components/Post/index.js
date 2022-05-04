@@ -4,9 +4,8 @@ import {
   Heart as HeartIcon,
   Send as SendIcon
 } from 'react-native-feather';
-import { colors } from "../../styles";
 
-import { configIcon } from "../../utils/configIcon";
+import { colors } from "../../styles";
 
 import { 
   Button,
@@ -23,9 +22,17 @@ import {
   MainText
 } from "./styled";
 
-const msg = `Lorem Ipsum is simply dummy text asdjfhaisjfhasklf sah fgashf gsaiof soif gsifgoasiufg sdfjdf hsaif shf ias fas fisfoais foidfh basf sf oof the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,`;
+export function Post(props) {
 
-export function Post() {
+  const { 
+    author, 
+    name, 
+    content, 
+    likes, 
+    createdIn, 
+    position
+  } = props;
+
   return (
     <Container>
       <ContainerHeader>
@@ -34,7 +41,7 @@ export function Post() {
             source={require('../../assets/images/avatar.png')}
           />
           <Button>
-            <HeaderTitle>Erik Matheus</HeaderTitle>
+            <HeaderTitle>{name}</HeaderTitle>
           </Button>
         </ContainerHeaderLeft>
         <Button>
@@ -46,7 +53,7 @@ export function Post() {
         </Button>
       </ContainerHeader>
       <ContainerMain>
-        <MainText>{msg}</MainText>
+        <MainText>{content}</MainText>
       </ContainerMain>
       <ContainerFooter>
         <ContainerFooterLeft>
@@ -54,12 +61,12 @@ export function Post() {
             <HeartIcon
               width={27}
               height={27}
-              color='#961818'
-              fill='#961818'
+              color={colors.WHITE_SECONDARY}
+              // fill='#961818'
             />
           </Button>
-          <FooterAmountOfLikes>{57}</FooterAmountOfLikes>
-          <Button>
+          <FooterAmountOfLikes>{likes}</FooterAmountOfLikes>
+          <Button onPress={() => alert('teste')}>
             <SendIcon 
               width={24}
               height={24}
@@ -67,7 +74,7 @@ export function Post() {
             />
           </Button>
         </ContainerFooterLeft>
-        <FooterPublicationTime>12:59</FooterPublicationTime>
+        <FooterPublicationTime>{createdIn}</FooterPublicationTime>
       </ContainerFooter>
     </Container>
   )

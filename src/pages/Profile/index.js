@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Text } from 'react-native';
+import { Button, Text } from 'react-native';
 import { Settings as SettingsIcon } from 'react-native-feather';
 
 import { FirebaseContext } from '../../contexts/useFirebase';
@@ -13,7 +13,7 @@ import { Container } from './styled';
 
 export function Profile() {
 
-  const { user } = useContext(FirebaseContext);
+  const { user, LogOutOfFirebase } = useContext(FirebaseContext);
 
   return (
     <Container>
@@ -22,6 +22,7 @@ export function Profile() {
         iconRight={<SettingsIcon {...configIcon} />}
       />
       <Text>Profile</Text>
+      <Button title="sair" onPress={LogOutOfFirebase} />
       <TabBarCustom />
     </Container>
   );

@@ -6,6 +6,8 @@ export const FirebaseContext = createContext();
 
 export function FirebaseProvider({children}) {
   const [user, setUser] = useState({});
+  const [posts, setPosts] = useState([]);
+  const [loadingPosts, setLoadingPosts] = useState(true);
   const [connectionState, setConnectionState] = useState(false);
 
   function LogInInFirebase(email, password) {
@@ -44,7 +46,42 @@ export function FirebaseProvider({children}) {
   };
 
   function LogOutOfFirebase() {
+    setPosts([]);
+    setUser({});
     auth().signOut();
+  };
+
+  function getUserData() {
+    const uid = auth().currentUser.uid;
+    firestore().collection('Users').doc(uid).get()
+    .then(snapshot => {
+      setUser(snapshot.data());
+    });
+  };
+
+  function getPosts() {
+    firestore().collection('Posts').orderBy('createdIn', 'desc').get()
+    .then(snapshot => {
+      let listPosts = [];
+      snapshot.docs.map(value => {
+        let post = {
+          name: value.data().name,
+          content: value.data().content,
+          author: value.data().author,
+          createdIn: value.data().createdIn.toDate()
+            .toLocaleTimeString('pt-br'),
+          likes: value.data().likes,
+          postId: value.data().postId
+        }
+        listPosts.push(post);
+      });
+      setPosts(listPosts);
+      setLoadingPosts(false);
+    })
+    .catch(error => {
+      console.log(error);
+      setLoadingPosts(false);
+    })
   };
 
   return (
@@ -53,8 +90,11 @@ export function FirebaseProvider({children}) {
       LogOnInFirebase,
       LogOutOfFirebase,
       connectionState,
-      setUser,
-      user
+      user,
+      getPosts,
+      getUserData,
+      posts,
+      loadingPosts
     }}>
       {children}
     </FirebaseContext.Provider>

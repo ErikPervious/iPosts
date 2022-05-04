@@ -13,7 +13,15 @@ import {
 } from "./styled";
 import { colors } from "../../styles";
 
-export function HeaderCustom({buttonLeftIsVisible, title, iconRight, iconRightAction}) {
+export function HeaderCustom(props) {
+
+  const {
+    buttonLeftIsVisible, 
+    title, 
+    iconRight, 
+    iconRightAction, 
+    iconRightIsLoading
+  } = props;
 
   const navigation = useNavigation();
 
@@ -35,7 +43,10 @@ export function HeaderCustom({buttonLeftIsVisible, title, iconRight, iconRightAc
         <Title>{title ? title : 'iPosts'}</Title>
       </ContainerLeft>
       <ContainerRight>
-        <ButtonIcon onPress={iconRightAction}>
+        <ButtonIcon 
+          onPress={iconRightAction}
+          disabled={iconRightIsLoading}
+        >
           {iconRight}
         </ButtonIcon>
       </ContainerRight>

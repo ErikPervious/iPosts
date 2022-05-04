@@ -3,7 +3,7 @@ import { colors } from '../../styles';
 
 export const Container = styled.View`
   margin: 15px 0;
-  width: 90%;
+  width: 100%;
   align-items: center;
 `;
 export const ContainerHeader = styled.View`
@@ -29,8 +29,8 @@ export const HeaderTitle = styled.Text`
 export const ContainerMain = styled.View`
   margin-top: 10px;
   width: 100%;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   padding: 0px 10px;
 `;
 export const MainText = styled.Text`
