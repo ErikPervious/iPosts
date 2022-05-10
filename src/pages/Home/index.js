@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { ActivityIndicator, ScrollView, StatusBar } from 'react-native';
+import { ActivityIndicator, FlatList, ScrollView, StatusBar } from 'react-native';
 import { Search as SearchIcon } from 'react-native-feather';
 
 import { FirebaseContext } from '../../contexts/useFirebase';
@@ -41,7 +41,6 @@ export function Home() {
         <ScrollView 
           style={{width: '100%'}}
           showsVerticalScrollIndicator={false}
-          endFillColor='#00ff00'
         >
           <SafeArea>
             {posts.map((value, index) => (
@@ -53,6 +52,7 @@ export function Home() {
                 likes={value.likes}
                 key={value.postId}
                 position={index}
+                postId={value.postId}
               />
             ))}
           </SafeArea>
@@ -62,3 +62,6 @@ export function Home() {
     </Container>
   );
 }
+
+
+

@@ -37,9 +37,9 @@ export function FirebaseProvider({children}) {
         email: email,
         registeredIn: new Date()
       };
+      setUser(userData);
       firestore().collection('Users').doc(value.user.uid).set(userData)
       .catch(error => console.log(error));
-      setUser(userData);
     })
     .catch(error => console.log(error));
     setConnectionState(false);

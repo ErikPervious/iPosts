@@ -30,6 +30,7 @@ export function NewPost() {
   const [loadingAddPost, setLoadingAddPost] = useState(false);
 
   const { user } = useContext(FirebaseContext);
+  
   const navigation = useNavigation();
 
   function addPost() {
@@ -45,7 +46,7 @@ export function NewPost() {
       author: user.uid,
       content: content,
       createdIn: new Date(),
-      likes: 0,
+      likes: [],
       name: user.name,
       postId: postId
     };
@@ -64,7 +65,6 @@ export function NewPost() {
       setContent('');
       console.log(error);
     });
-
   };
 
   return (

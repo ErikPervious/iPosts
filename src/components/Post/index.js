@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { 
   MoreVertical as MoreVerticalIcon,
   Heart as HeartIcon,
   Send as SendIcon
 } from 'react-native-feather';
 
-import { colors } from "../../styles";
+import firestore from '@react-native-firebase/firestore';
+
+import { FirebaseContext } from "../../contexts/useFirebase";
 
 import { 
   Button,
@@ -21,17 +23,41 @@ import {
   HeaderTitle,
   MainText
 } from "./styled";
+import { colors } from "../../styles";
 
-export function Post(props) {
+export function Post({name, content, likes, createdIn, postId}) {
+  const [likesPost, setLikesPost] = useState(likes);
+  const [isLikedForMe, setIsLikedForMe] = useState(false);
 
-  const { 
-    author, 
-    name, 
-    content, 
-    likes, 
-    createdIn, 
-    position
-  } = props;
+  const { user } = useContext(FirebaseContext);
+
+  function likePost() {
+    likesPost.findIndex((element) => element === user.uid)
+    ? (
+      firestore().collection('Posts').doc(postId)
+      .update({ likes: [user.uid, ...likesPost] })
+      .then(() => {
+        setLikesPost(oldValue => [user.uid, ...oldValue]);
+      })
+    ) : (
+      firestore().collection('Posts').doc(postId)
+      .update({ likes: likesPost.filter(e => e !== user.uid) })
+      .then(() => {
+        setLikesPost(likesPost.filter(e => e !== user.uid));
+      })
+    );
+  };
+
+  useEffect(() => {
+    function isLiked() {
+      const liked = likesPost.findIndex((element) => element === user.uid);
+      if(liked !== -1) {
+        return setIsLikedForMe(true);
+      }
+      setIsLikedForMe(false);
+    };
+    isLiked();
+  }, [likesPost]);
 
   return (
     <Container>
@@ -57,15 +83,14 @@ export function Post(props) {
       </ContainerMain>
       <ContainerFooter>
         <ContainerFooterLeft>
-          <Button>
-            <HeartIcon
-              width={27}
-              height={27}
-              color={colors.WHITE_SECONDARY}
-              // fill='#961818'
+          <Button onPress={likePost}>
+            <HeartIcon 
+              width={27} 
+              height={27} 
+              fill={isLikedForMe ? "#961818" : "#96181850"}
             />
           </Button>
-          <FooterAmountOfLikes>{likes}</FooterAmountOfLikes>
+          <FooterAmountOfLikes>{likesPost.length}</FooterAmountOfLikes>
           <Button onPress={() => alert('teste')}>
             <SendIcon 
               width={24}
