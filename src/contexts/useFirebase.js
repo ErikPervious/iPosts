@@ -64,12 +64,13 @@ export function FirebaseProvider({children}) {
     .then(snapshot => {
       let listPosts = [];
       snapshot.docs.map(value => {
+        const date = value.data().createdIn.toDate();
+        const dateFormatted = `${date.getUTCHours()}:${date.getUTCMinutes()}`;
         let post = {
           name: value.data().name,
           content: value.data().content,
           author: value.data().author,
-          createdIn: value.data().createdIn.toDate()
-            .toLocaleTimeString('pt-br'),
+          createdIn: dateFormatted,
           likes: value.data().likes,
           postId: value.data().postId
         }
