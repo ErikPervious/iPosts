@@ -4,7 +4,6 @@ import {
   Heart as HeartIcon,
   Send as SendIcon
 } from 'react-native-feather';
-import { format } from 'date-fns'
 
 import firestore from '@react-native-firebase/firestore';
 
