@@ -26,3 +26,4 @@ export const ContainerRight = styled.View`
   justify-content: center;
 `;
 export const ButtonIcon = styled.TouchableOpacity``;
+export const ButtonWithoutFeedback = styled.TouchableWithoutFeedback``;

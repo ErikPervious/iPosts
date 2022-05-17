@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
@@ -9,6 +9,7 @@ export function FirebaseProvider({children}) {
   const [posts, setPosts] = useState([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
   const [connectionState, setConnectionState] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   function LogInInFirebase(email, password) {
     if (email === '' || password === '') return alert('Preencha todos os campos!');
@@ -60,6 +61,7 @@ export function FirebaseProvider({children}) {
   };
 
   function getPosts() {
+    setLoadingPosts(true);
     firestore().collection('Posts').orderBy('createdIn', 'desc').get()
     .then(snapshot => {
       let listPosts = [];
@@ -76,13 +78,20 @@ export function FirebaseProvider({children}) {
         listPosts.push(post);
       });
       setPosts(listPosts);
+      setRefreshing(false);
       setLoadingPosts(false);
     })
     .catch(error => {
       console.log(error);
+      setRefreshing(false);
       setLoadingPosts(false);
     })
   };
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    getPosts();
+  }, []);
 
   return (
     <FirebaseContext.Provider value={{
@@ -94,7 +103,9 @@ export function FirebaseProvider({children}) {
       getPosts,
       getUserData,
       posts,
-      loadingPosts
+      loadingPosts,
+      refreshing,
+      onRefresh
     }}>
       {children}
     </FirebaseContext.Provider>

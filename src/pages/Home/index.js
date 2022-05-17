@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { ActivityIndicator, FlatList, ScrollView, StatusBar } from 'react-native';
+import { ActivityIndicator, RefreshControl, ScrollView, StatusBar } from 'react-native';
 import { Search as SearchIcon } from 'react-native-feather';
 
 import { FirebaseContext } from '../../contexts/useFirebase';
@@ -19,7 +19,9 @@ export function Home() {
     posts,
     loadingPosts,
     getPosts,
-    getUserData
+    getUserData,
+    refreshing,
+    onRefresh
   } = useContext(FirebaseContext);
 
   useEffect(() => getUserData(), []);
@@ -41,6 +43,11 @@ export function Home() {
         <ScrollView 
           style={{width: '100%'}}
           showsVerticalScrollIndicator={false}
+          refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />}
         >
           <SafeArea>
             {posts.map((value, index) => (

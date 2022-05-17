@@ -29,8 +29,8 @@ export const ContainerProfileBox = styled.View`
 `;
 export const Division = styled.View`
   margin: 30px 0;
-  width: 200px;
+  width: 100%;
   height: 1px;
   border-radius: 1px;
-  background-color: ${colors.WHITE_SECONDARY+50};
+  background-color: ${colors.WHITE_SECONDARY+10};
 `;

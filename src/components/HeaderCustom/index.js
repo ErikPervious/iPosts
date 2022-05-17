@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import * as Feather from 'react-native-feather';
 import { useNavigation } from "@react-navigation/native";
 
@@ -6,12 +6,13 @@ import { configIcon } from "../../utils/configIcon";
 
 import { 
   ButtonIcon,
+  ButtonWithoutFeedback,
   Container, 
   ContainerLeft, 
   ContainerRight, 
   Title 
 } from "./styled";
-import { colors } from "../../styles";
+import { FirebaseContext } from "../../contexts/useFirebase";
 
 export function HeaderCustom(props) {
 
@@ -22,6 +23,8 @@ export function HeaderCustom(props) {
     iconRightAction, 
     iconRightIsLoading
   } = props;
+
+  const { getPosts } = useContext(FirebaseContext);
 
   const navigation = useNavigation();
 
@@ -40,7 +43,11 @@ export function HeaderCustom(props) {
             />
           </ButtonIcon>
         }
-        <Title>{title ? title : 'iPosts'}</Title>
+        <ButtonWithoutFeedback
+          onPress={() => title === 'iPosts' && getPosts()}
+        >
+          <Title>{title ? title : 'iPosts'}</Title>
+        </ButtonWithoutFeedback>
       </ContainerLeft>
       <ContainerRight>
         <ButtonIcon 

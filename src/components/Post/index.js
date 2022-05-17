@@ -25,7 +25,7 @@ import {
 } from "./styled";
 import { colors } from "../../styles";
 
-export function Post({name, content, likes, createdIn, postId}) {
+export function Post({author, name, content, likes, createdIn, postId}) {
   const [likesPost, setLikesPost] = useState(likes);
   const [isLikedForMe, setIsLikedForMe] = useState(false);
 
@@ -48,6 +48,9 @@ export function Post({name, content, likes, createdIn, postId}) {
     );
   };
 
+  function navigationToUserPost() {
+  };
+
   useEffect(() => {
     function isLiked() {
       const liked = likesPost.findIndex((element) => element === user.uid);
@@ -66,7 +69,7 @@ export function Post({name, content, likes, createdIn, postId}) {
           <HeaderAvatar
             source={require('../../assets/images/avatar.png')}
           />
-          <Button>
+          <Button onPress={navigationToUserPost}>
             <HeaderTitle>{name}</HeaderTitle>
           </Button>
         </ContainerHeaderLeft>

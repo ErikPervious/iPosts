@@ -2,8 +2,8 @@ import { colors } from "../styles";
 
 const configIcon = {
   color: colors.WHITE_SECONDARY,
-  width: 30,
-  height: 30
+  width: 25,
+  height: 25
 };
 
 export { configIcon };

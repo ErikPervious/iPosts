@@ -4,7 +4,7 @@ import { colors } from '../../styles';
 export const Container = styled.View`
   position: absolute;
   bottom: 18px;
-  width: 85%;
+  width: 70%;
   border-radius: 34px;
   background-color: ${colors.BLACK_SECONDARY};
   flex-direction: row;
